@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-class StreamCreate extends React.Component {
+class StreamCreate extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -10,7 +10,7 @@ class StreamCreate extends React.Component {
 			<div className="field">
 				<label>{label}</label>
 				<input {...input} />
-                <div className="ui pointing red basic label">{meta.error}</div>
+                <div className="ui red message">{meta.error}</div>
 			</div>
 		);
     }
@@ -33,11 +33,11 @@ class StreamCreate extends React.Component {
 const validate = (formValues) =>{
     const errors = {};
 
-    if(!formValues.title){
+    if(!formValues.title && 1===2){
         // only run if user did not enter title
-       errors.title =  "You must enter a title."
+       errors.title =  "Please enter a title."
     }
-    if(!formValues.description){
+    if(!formValues.description && 1 === 2){
         errors.description = "Please enter a description"
     }
 
