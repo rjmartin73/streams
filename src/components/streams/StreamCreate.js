@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-class StreamCreate extends React.Component {
+class StreamCreate extends Component {
 	constructor(props) {
 		super(props);
-	}
-	renderInput({ input, label, meta }) {
-        return (
-			<div className="field">
+    }
+    renderError({error, touched}){
+        if (touched && error) {
+            return(
+                <div className="ui pointing red basic label error">{error}</div>
+            )
+        }
+    }
+	renderInput = ({ input, label, meta }) => {
+        const className = `field ${meta.error && meta.touched ? ' error': ''}`;
+		return (
+			<div className={className}>
 				<label>{label}</label>
-				<input {...input} />
-                <div className="ui pointing red basic label">{meta.error}</div>
+				<input {...input} autoComplete="off" />
+                {this.renderError(meta)}
+				
 			</div>
 		);
-    }
+	}
 
-    onSubmit(formValues){
-       
+	onSubmit(formValues) {
+        console.log(formValues);
     }
 
 	render() {
@@ -24,28 +33,27 @@ class StreamCreate extends React.Component {
 			<form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form">
 				<Field name="title" component={this.renderInput} label="Enter Title" />
 				<Field name="description" component={this.renderInput} label="Enter Description" />
-			<button className="ui button primary">Submit</button>
-            </form>
+				<button className="ui blue basic button">Submit</button>
+			</form>
 		);
 	}
 }
 
-const validate = (formValues) =>{
-    const errors = {};
+const validate = (formValues) => {
+	const errors = {};
 
-    if(!formValues.title){
-        // only run if user did not enter title
-       errors.title =  "You must enter a title."
-    }
-    if(!formValues.description){
-        errors.description = "Please enter a description"
-    }
+	if (!formValues.title) {
+		// only run if user did not enter title
+		errors.title = 'You must enter a title.';
+	}
+	if (!formValues.description) {
+		errors.description = 'Please enter a description';
+	}
 
-    return errors;
-    
-}
+	return errors;
+};
 
 export default reduxForm({
-    form: 'streamCreate',
-    validate: validate
+	form: 'streamCreate',
+	validate: validate
 })(StreamCreate);
