@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { createStream } from '../../actions';
+//import authReducer from '../../reducers/authReducer';
 
 class StreamCreate extends Component {
 	renderError({ error, touched }) {
@@ -25,6 +26,7 @@ class StreamCreate extends Component {
 	}
 
 	render() {
+		console.log(this.state)
 		return (
 			<form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form">
 				<Field name="title" component={this.renderInput} label="Enter Title" placeholder="Title..." />
@@ -32,7 +34,7 @@ class StreamCreate extends Component {
 					name="description"
 					component={this.renderInput}
 					label="Enter Description"
-					placeholder="Descrption..."
+					placeholder="Description..."
 				/>
 				<button className="ui blue basic button">Submit</button>
 			</form>
